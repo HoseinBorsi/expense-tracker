@@ -2,55 +2,123 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ردیاب هزینه</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ردیاب هزینه | مدیریت هزینه‌های روزانه</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📝 ردیاب هزینه‌های روزانه</h1>
+    <div class="app-container">
+        <!-- ===== هدر ===== -->
+        <header class="app-header">
+            <div class="header-top">
+                <h1 class="app-title">💰 ردیاب هزینه</h1>
+                <span class="header-date" id="header-date"></span>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" id="search-toggle" title="جستجو">🔍</button>
+                <button class="header-btn" id="export-btn" title="خروجی JSON">📥</button>
+            </div>
         </header>
 
-        <main>
-            <section class="add-expense">
-                <h2>ثبت هزینه‌ی جدید</h2>
+        <!-- ===== بخش جستجو (مخفی اولیه) ===== -->
+        <div class="search-bar hidden" id="search-bar">
+            <input type="text" id="search-input" placeholder="جستجو بین هزینه‌ها...">
+            <button class="search-close" id="search-close">✕</button>
+        </div>
+
+        <!-- ===== جمع ماهانه ===== -->
+        <section class="summary-card" id="summary-section">
+            <div class="summary-header">
+                <span class="summary-label">📊 جمع ماه جاری</span>
+                <select class="month-picker" id="month-picker"></select>
+            </div>
+            <div class="summary-total" id="summary-total">
+                <span class="total-amount">۰</span>
+                <span class="total-currency">تومان</span>
+            </div>
+            <div class="summary-stats" id="summary-stats">
+                <span class="stat-item">
+                    <span class="stat-label">تعداد</span>
+                    <span class="stat-value" id="stat-count">۰</span>
+                </span>
+                <span class="stat-divider">|</span>
+                <span class="stat-item">
+                    <span class="stat-label">میانگین روزانه</span>
+                    <span class="stat-value" id="stat-average">۰</span>
+                </span>
+            </div>
+        </section>
+
+        <!-- ===== فرم افزودن هزینه (کارت جمع‌شونده) ===== -->
+        <section class="add-card">
+            <button class="add-toggle" id="add-toggle">
+                <span>➕ افزودن هزینه جدید</span>
+                <span class="toggle-arrow" id="toggle-arrow">▼</span>
+            </button>
+            <div class="add-form-container" id="add-form-container">
                 <form id="expense-form">
-                    <div class="form-group">
-                        <label for="amount">مقدار (تومان):</label>
-                        <input type="number" id="amount" name="amount" min="0" step="1000" placeholder="مثال: ۵۰۰۰۰" required>
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="amount">مقدار (تومان)</label>
+                            <input type="number" id="amount" min="1" step="1000" placeholder="مثال: ۵۰۰۰۰" required>
+                        </div>
+                        <div class="form-group half">
+                            <label for="category">دسته‌بندی</label>
+                            <select id="category">
+                                <option value="خوراکی">🍔 خوراکی</option>
+                                <option value="حمل و نقل">🚗 حمل و نقل</option>
+                                <option value="مسکن">🏠 مسکن</option>
+                                <option value="تفریح">🎮 تفریح</option>
+                                <option value="سلامت">💊 سلامت</option>
+                                <option value="خرید">🛒 خرید</option>
+                                <option value="سایر">📌 سایر</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="description">توضیح:</label>
-                        <input type="text" id="description" name="description" placeholder="مثال: ناهار امروز" required>
+                        <label for="description">توضیح</label>
+                        <input type="text" id="description" placeholder="مثال: ناهار امروز" required>
                     </div>
-                    <div class="form-group">
-                        <label for="date">تاریخ:</label>
-                        <input type="date" id="date" name="date" required>
+                    <div class="form-row">
+                        <div class="form-group third">
+                            <label for="j-year">سال</label>
+                            <select id="j-year"></select>
+                        </div>
+                        <div class="form-group third">
+                            <label for="j-month">ماه</label>
+                            <select id="j-month"></select>
+                        </div>
+                        <div class="form-group third">
+                            <label for="j-day">روز</label>
+                            <select id="j-day"></select>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-add">➕ افزودن هزینه</button>
+                    <button type="submit" class="btn btn-add">💾 ثبت هزینه</button>
                 </form>
-            </section>
+            </div>
+        </section>
 
-            <section class="monthly-summary">
-                <h2>📊 جمع ماهانه</h2>
-                <div class="summary-controls">
-                    <label for="month-selector">ماه:</label>
-                    <select id="month-selector"></select>
+        <!-- ===== لیست هزینه‌ها ===== -->
+        <section class="list-section">
+            <div class="list-header">
+                <h2>📋 هزینه‌ها</h2>
+                <span class="list-count" id="list-count">۰ مورد</span>
+            </div>
+            <div id="expenses-container">
+                <div class="empty-state" id="empty-state">
+                    <div class="empty-icon">📭</div>
+                    <p>هنوز هزینه‌ای ثبت نکردی!</p>
+                    <p class="empty-hint">روی دکمه بالا کلیک کن و اولین هزینه رو اضافه کن.</p>
                 </div>
-                <div class="summary-total" id="summary-total">۰ تومان</div>
-            </section>
+                <div id="expenses-list"></div>
+            </div>
+        </section>
 
-            <section class="expense-list">
-                <h2>لیست هزینه‌ها</h2>
-                <div id="expenses-container">
-                    <p class="empty-message" id="empty-message">هیچ هزینه‌ای ثبت نشده. اولین هزینه رو اضافه کن!</p>
-                    <ul id="expenses-list" class="expenses-list"></ul>
-                </div>
-            </section>
-        </main>
+        <!-- ===== دکمه رفتن به بالای صفحه ===== -->
+        <button class="fab" id="fab-top" title="برو به بالا">↑</button>
     </div>
 
+    <script src="lib/jalali.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

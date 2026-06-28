@@ -1,95 +1,366 @@
-/* ===== تنظیمات پایه ===== */
+/* =============================================
+   ردیاب هزینه — استایل حرفه‌ای Mobile-First
+   ============================================= */
+
+/* ===== متغیرهای رنگ ===== */
+:root {
+    --primary: #6c5ce7;
+    --primary-dark: #5a4bd1;
+    --primary-light: #a29bfe;
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --text: #2d3436;
+    --text-secondary: #636e72;
+    --text-muted: #b2bec3;
+    --border: #dfe6e9;
+    --success: #00b894;
+    --success-light: #e6fff8;
+    --danger: #ff7675;
+    --danger-light: #fff5f5;
+    --warning: #fdcb6e;
+    --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+}
+
+/* ===== ریست و پایه ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f4f8;
-    color: #1a202c;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Vazir', Tahoma, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
     line-height: 1.6;
-    padding: 20px;
+    padding: 0;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* ===== کانتینر اصلی ===== */
-.container {
-    max-width: 700px;
+.app-container {
+    max-width: 480px;
     margin: 0 auto;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    padding: 30px;
+    padding: 0 16px 90px 16px;
+    position: relative;
 }
 
-/* ===== هدر ===== */
-header {
-    text-align: center;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #e2e8f0;
+/* =============================================
+   HEADER
+   ============================================= */
+.app-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg);
+    z-index: 10;
 }
 
-header h1 {
-    font-size: 1.6rem;
-    color: #2d3748;
+.header-top {
+    display: flex;
+    flex-direction: column;
 }
 
-/* ===== بخش افزودن هزینه ===== */
-.add-expense {
-    background-color: #f7fafc;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
+.app-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
 }
 
-.add-expense h2 {
+.header-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.header-btn {
+    width: 38px;
+    height: 38px;
+    background: var(--surface);
+    border: none;
+    border-radius: 50%;
     font-size: 1.1rem;
-    color: #4a5568;
-    margin-bottom: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+    transition: all 0.2s;
+}
+
+.header-btn:active {
+    transform: scale(0.92);
+}
+
+/* =============================================
+   SEARCH BAR
+   ============================================= */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    background: var(--surface);
+}
+
+.search-bar input:focus {
+    border-color: var(--primary-light);
+}
+
+.search-close {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 6px;
+}
+
+.search-close:hover {
+    color: var(--text);
+}
+
+/* =============================================
+   SUMMARY CARD
+   ============================================= */
+.summary-card {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    color: white;
+    box-shadow: 0 4px 20px rgba(108, 92, 231, 0.3);
+}
+
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.summary-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.month-picker {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    color: white;
+    font-size: 0.85rem;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+    backdrop-filter: blur(4px);
+}
+
+.month-picker option {
+    color: var(--text);
+    background: white;
+}
+
+.summary-total {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.total-amount {
+    font-size: 2.5rem;
+    font-weight: 800;
+    direction: ltr;
+    display: inline-block;
+    line-height: 1.2;
+}
+
+.total-currency {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    display: block;
+    margin-top: 2px;
+}
+
+.summary-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 12px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+.stat-value {
+    font-size: 0.9rem;
+    font-weight: 700;
+    direction: ltr;
+}
+
+.stat-divider {
+    opacity: 0.3;
+}
+
+/* =============================================
+   ADD CARD (فرم جمع‌شونده)
+   ============================================= */
+.add-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.add-toggle {
+    width: 100%;
+    padding: 14px 16px;
+    background: none;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text);
+    transition: background-color 0.2s;
+}
+
+.add-toggle:hover {
+    background-color: var(--bg);
+}
+
+.toggle-arrow {
+    font-size: 0.75rem;
+    transition: transform 0.3s ease;
+}
+
+.toggle-arrow.open {
+    transform: rotate(180deg);
+}
+
+.add-form-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 16px;
+}
+
+.add-form-container.open {
+    max-height: 500px;
+    padding: 0 16px 16px;
 }
 
 /* ===== فرم ===== */
+#expense-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
 .form-group {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group.half {
+    flex: 1;
+}
+
+.form-group.third {
+    flex: 1;
 }
 
 .form-group label {
-    display: block;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: #4a5568;
-    margin-bottom: 5px;
+    color: var(--text-secondary);
 }
 
-.form-group input {
-    width: 100%;
+.form-group input,
+.form-group select {
     padding: 10px 12px;
-    font-size: 1rem;
-    border: 1px solid #cbd5e0;
-    border-radius: 6px;
-    background-color: #ffffff;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.form-group input:focus {
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: var(--surface);
     outline: none;
-    border-color: #4299e1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+    transition: border-color 0.2s;
 }
 
-/* ===== دکمه‌ها ===== */
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--primary-light);
+}
+
+.form-group input::placeholder {
+    color: var(--text-muted);
+}
+
 .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: 600;
+    padding: 12px 20px;
     border: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-family: inherit;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+    transition: all 0.2s;
 }
 
 .btn:active {
@@ -97,160 +368,263 @@ header h1 {
 }
 
 .btn-add {
-    background-color: #48bb78;
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--success), #00a381);
+    color: white;
     width: 100%;
 }
 
 .btn-add:hover {
-    background-color: #38a169;
+    opacity: 0.9;
 }
 
-.btn-delete {
-    background-color: #fc8181;
-    color: #ffffff;
-    padding: 6px 14px;
-    font-size: 0.85rem;
+/* =============================================
+   LIST SECTION
+   ============================================= */
+.list-section {
+    margin-top: 4px;
 }
 
-.btn-delete:hover {
-    background-color: #e53e3e;
-}
-
-/* ===== بخش جمع ماهانه ===== */
-.monthly-summary {
-    background-color: #ebf8ff;
-    border: 1px solid #bee3f8;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-    text-align: center;
-}
-
-.monthly-summary h2 {
-    font-size: 1.1rem;
-    color: #2b6cb0;
-    margin-bottom: 15px;
-}
-
-.summary-controls {
-    margin-bottom: 12px;
+.list-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    margin-bottom: 12px;
 }
 
-.summary-controls label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #4a5568;
-}
-
-.summary-controls select {
-    padding: 8px 12px;
-    font-size: 0.95rem;
-    border: 1px solid #cbd5e0;
-    border-radius: 6px;
-    background-color: #ffffff;
-    cursor: pointer;
-}
-
-.summary-controls select:focus {
-    outline: none;
-    border-color: #4299e1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
-}
-
-.summary-total {
-    font-size: 1.8rem;
+.list-header h2 {
+    font-size: 1rem;
     font-weight: 700;
-    color: #2b6cb0;
-    direction: ltr;
-    display: inline-block;
+    color: var(--text);
 }
 
-/* ===== بخش لیست هزینه‌ها ===== */
-.expense-list h2 {
-    font-size: 1.1rem;
-    color: #4a5568;
-    margin-bottom: 15px;
+.list-count {
+    font-size: 0.8rem;
+    color: var(--text-muted);
 }
 
-.empty-message {
+/* ===== حالت خالی ===== */
+.empty-state {
     text-align: center;
-    color: #a0aec0;
-    font-size: 0.95rem;
-    padding: 30px 0;
+    padding: 40px 20px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
 }
 
-.expenses-list {
-    list-style: none;
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.empty-state p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.empty-hint {
+    font-size: 0.8rem !important;
+    color: var(--text-muted) !important;
+    margin-top: 6px;
+}
+
+/* ===== آیتم هزینه ===== */
+#expenses-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .expense-item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 16px;
-    background-color: #f7fafc;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    border-right: 4px solid #48bb78;
-    transition: box-shadow 0.2s;
+    align-items: flex-start;
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 14px;
+    box-shadow: var(--shadow);
+    transition: all 0.2s;
+    animation: fadeIn 0.2s ease;
+    position: relative;
 }
 
-.expense-item:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.expense-item:active {
+    transform: scale(0.99);
+}
+
+.expense-category-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    margin-left: 12px;
 }
 
 .expense-info {
     flex: 1;
+    min-width: 0;
 }
 
 .expense-amount {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
-    color: #2d3748;
+    color: var(--text);
     direction: ltr;
     display: inline-block;
 }
 
 .expense-description {
-    font-size: 0.9rem;
-    color: #718096;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
     margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .expense-date {
-    font-size: 0.8rem;
-    color: #a0aec0;
+    font-size: 0.75rem;
+    color: var(--text-muted);
     margin-top: 4px;
 }
 
 .expense-actions {
-    margin-right: 15px;
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
 }
 
-/* ===== حالت نمایشی: مخفی کردن لیست وقتی خالیه ===== */
-.hidden {
+.btn-delete {
+    background: none;
+    border: none;
+    padding: 6px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    color: var(--danger);
+    transition: background-color 0.2s;
+    line-height: 1;
+}
+
+.btn-delete:hover {
+    background-color: var(--danger-light);
+}
+
+/* ===== رنگ‌های دسته‌بندی ===== */
+.cat-خوراکی { background: #ffeaa7; }
+.cat-حمل-و-نقل { background: #81ecec; }
+.cat-مسکن { background: #fab1a0; }
+.cat-تفریح { background: #a29bfe; color: white; }
+.cat-سلامت { background: #ff7675; color: white; }
+.cat-خرید { background: #fd79a8; color: white; }
+.cat-سایر { background: #dfe6e9; }
+
+/* =============================================
+   FAB (دکمه شناور)
+   ============================================= */
+.fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.2s;
+    z-index: 20;
     display: none;
+    align-items: center;
+    justify-content: center;
 }
 
-/* ===== ریسپانسیو برای موبایل ===== */
-@media (max-width: 500px) {
-    .container {
-        padding: 15px;
+.fab.visible {
+    display: flex;
+}
+
+.fab:active {
+    transform: scale(0.9);
+}
+
+/* =============================================
+   TOAST (اعلان)
+   ============================================= */
+.toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+    animation: toastIn 0.3s ease;
+}
+
+@keyframes toastIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* =============================================
+   UTILITIES
+   ============================================= */
+.hidden {
+    display: none !important;
+}
+
+/* =============================================
+   RESPONSIVE — TABLET & DESKTOP
+   ============================================= */
+@media (min-width: 600px) {
+    .app-container {
+        max-width: 600px;
+        padding: 20px 24px 100px;
     }
 
-    .expense-item {
-        flex-direction: column;
-        align-items: flex-start;
+    .app-header {
+        padding: 20px 0;
     }
 
-    .expense-actions {
-        margin-right: 0;
-        margin-top: 10px;
-        align-self: flex-end;
+    .app-title {
+        font-size: 1.5rem;
+    }
+
+    .summary-card {
+        padding: 24px 28px;
+    }
+
+    .total-amount {
+        font-size: 3rem;
+    }
+
+    .fab {
+        bottom: 32px;
+        right: calc(50% - 300px + 24px);
+    }
+}
+
+@media (min-width: 900px) {
+    .app-container {
+        max-width: 700px;
+    }
+
+    .fab {
+        right: calc(50% - 350px + 24px);
     }
 }
