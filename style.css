@@ -1,0 +1,203 @@
+/* ===== تنظیمات پایه ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8;
+    color: #1a202c;
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* ===== کانتینر اصلی ===== */
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+}
+
+/* ===== هدر ===== */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+header h1 {
+    font-size: 1.6rem;
+    color: #2d3748;
+}
+
+/* ===== بخش افزودن هزینه ===== */
+.add-expense {
+    background-color: #f7fafc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.add-expense h2 {
+    font-size: 1.1rem;
+    color: #4a5568;
+    margin-bottom: 15px;
+}
+
+/* ===== فرم ===== */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    background-color: #ffffff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+/* ===== دکمه‌ها ===== */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-add {
+    background-color: #48bb78;
+    color: #ffffff;
+    width: 100%;
+}
+
+.btn-add:hover {
+    background-color: #38a169;
+}
+
+.btn-delete {
+    background-color: #fc8181;
+    color: #ffffff;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+}
+
+.btn-delete:hover {
+    background-color: #e53e3e;
+}
+
+/* ===== بخش لیست هزینه‌ها ===== */
+.expense-list h2 {
+    font-size: 1.1rem;
+    color: #4a5568;
+    margin-bottom: 15px;
+}
+
+.empty-message {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 0.95rem;
+    padding: 30px 0;
+}
+
+.expenses-list {
+    list-style: none;
+}
+
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background-color: #f7fafc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-right: 4px solid #48bb78;
+    transition: box-shadow 0.2s;
+}
+
+.expense-item:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.expense-info {
+    flex: 1;
+}
+
+.expense-amount {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2d3748;
+    direction: ltr;
+    display: inline-block;
+}
+
+.expense-description {
+    font-size: 0.9rem;
+    color: #718096;
+    margin-top: 2px;
+}
+
+.expense-date {
+    font-size: 0.8rem;
+    color: #a0aec0;
+    margin-top: 4px;
+}
+
+.expense-actions {
+    margin-right: 15px;
+}
+
+/* ===== حالت نمایشی: مخفی کردن لیست وقتی خالیه ===== */
+.hidden {
+    display: none;
+}
+
+/* ===== ریسپانسیو برای موبایل ===== */
+@media (max-width: 500px) {
+    .container {
+        padding: 15px;
+    }
+
+    .expense-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .expense-actions {
+        margin-right: 0;
+        margin-top: 10px;
+        align-self: flex-end;
+    }
+}

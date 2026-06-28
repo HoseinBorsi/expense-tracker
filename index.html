@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ردیاب هزینه</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 ردیاب هزینه‌های روزانه</h1>
+        </header>
+
+        <main>
+            <section class="add-expense">
+                <h2>ثبت هزینه‌ی جدید</h2>
+                <form id="expense-form">
+                    <div class="form-group">
+                        <label for="amount">مقدار (تومان):</label>
+                        <input type="number" id="amount" name="amount" min="0" step="1000" placeholder="مثال: ۵۰۰۰۰" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">توضیح:</label>
+                        <input type="text" id="description" name="description" placeholder="مثال: ناهار امروز" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">تاریخ:</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <button type="submit" class="btn btn-add">➕ افزودن هزینه</button>
+                </form>
+            </section>
+
+            <section class="expense-list">
+                <h2>لیست هزینه‌ها</h2>
+                <div id="expenses-container">
+                    <p class="empty-message" id="empty-message">هیچ هزینه‌ای ثبت نشده. اولین هزینه رو اضافه کن!</p>
+                    <ul id="expenses-list" class="expenses-list"></ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
