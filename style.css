@@ -117,6 +117,59 @@ header h1 {
     background-color: #e53e3e;
 }
 
+/* ===== بخش جمع ماهانه ===== */
+.monthly-summary {
+    background-color: #ebf8ff;
+    border: 1px solid #bee3f8;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.monthly-summary h2 {
+    font-size: 1.1rem;
+    color: #2b6cb0;
+    margin-bottom: 15px;
+}
+
+.summary-controls {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.summary-controls label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.summary-controls select {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.summary-controls select:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+.summary-total {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2b6cb0;
+    direction: ltr;
+    display: inline-block;
+}
+
 /* ===== بخش لیست هزینه‌ها ===== */
 .expense-list h2 {
     font-size: 1.1rem;

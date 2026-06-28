@@ -149,6 +149,8 @@ function addExpense(event) {
     document.getElementById('expense-form').reset();
     document.getElementById('date').value = getTodayDate();
     renderExpenses();
+    populateMonthSelector(expenses);
+    updateMonthlySummary();
 }
 
 // ===== حذف یه هزینه با تأیید =====
@@ -162,6 +164,111 @@ function deleteExpense(index) {
     expenses.splice(index, 1);
     saveExpenses(expenses);
     renderExpenses();
+    populateMonthSelector(expenses);
+    updateMonthlySummary();
+}
+
+// ===== نام ماه‌های شمسی (فارسی) =====
+const PERSIAN_MONTHS = [
+    'فروردین', 'اردیبهشت', 'خرداد',
+    'تیر', 'مرداد', 'شهریور',
+    'مهر', 'آبان', 'آذر',
+    'دی', 'بهمن', 'اسفند'
+];
+
+// ===== استخراج سال و ماه از تاریخ میلادی =====
+function getYearMonth(dateStr) {
+    const parts = dateStr.split('-');
+    if (parts.length !== 3) return null;
+    return {
+        year: parseInt(parts[0], 10),
+        month: parseInt(parts[1], 10)  // 1-based (1 = January)
+    };
+}
+
+// ===== تبدیل سال/ماه به کلید یکتا برای مقایسه =====
+function yearMonthKey(year, month) {
+    return year + '-' + String(month).padStart(2, '0');
+}
+
+// ===== گرفتن ماه‌های موجود از لیست هزینه‌ها =====
+function getAvailableMonths(expenses) {
+    const monthSet = new Set();
+    expenses.forEach(function(expense) {
+        const ym = getYearMonth(expense.date);
+        if (ym) {
+            monthSet.add(yearMonthKey(ym.year, ym.month));
+        }
+    });
+    // مرتب‌سازی نزولی (جدیدترین اول)
+    const sorted = Array.from(monthSet).sort().reverse();
+    return sorted;
+}
+
+// ===== پر کردن انتخابگر ماه =====
+function populateMonthSelector(expenses) {
+    const selector = document.getElementById('month-selector');
+    const availableMonths = getAvailableMonths(expenses);
+
+    // پاک کردن گزینه‌های قبلی
+    selector.innerHTML = '';
+
+    if (availableMonths.length === 0) {
+        const option = document.createElement('option');
+        option.textContent = 'هیچ هزینه‌ای ثبت نشده';
+        option.disabled = true;
+        option.selected = true;
+        selector.appendChild(option);
+        return;
+    }
+
+    availableMonths.forEach(function(key) {
+        const parts = key.split('-');
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10); // 1-based
+        const monthName = PERSIAN_MONTHS[month - 1]; // index 0-based
+
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = monthName + ' ' + year;
+        selector.appendChild(option);
+    });
+}
+
+// ===== محاسبه و نمایش جمع ماهانه =====
+function updateMonthlySummary() {
+    const expenses = loadExpenses();
+    const selector = document.getElementById('month-selector');
+    const summaryEl = document.getElementById('summary-total');
+
+    if (expenses.length === 0) {
+        summaryEl.textContent = '۰ تومان';
+        return;
+    }
+
+    const selectedKey = selector.value;
+    if (!selectedKey) {
+        summaryEl.textContent = '۰ تومان';
+        return;
+    }
+
+    const parts = selectedKey.split('-');
+    const targetYear = parseInt(parts[0], 10);
+    const targetMonth = parseInt(parts[1], 10); // 1-based
+
+    // فیلتر هزینه‌های مربوط به ماه انتخاب‌شده
+    const filtered = expenses.filter(function(expense) {
+        const ym = getYearMonth(expense.date);
+        if (!ym) return false;
+        return ym.year === targetYear && ym.month === targetMonth;
+    });
+
+    // محاسبه جمع
+    const total = filtered.reduce(function(sum, expense) {
+        return sum + expense.amount;
+    }, 0);
+
+    summaryEl.textContent = formatAmount(total) + ' تومان';
 }
 
 // ===== مقداردهی اولیه وقتی صفحه بار می‌شه =====
@@ -172,8 +279,14 @@ function init() {
     // اتصال رویداد submit به فرم
     document.getElementById('expense-form').addEventListener('submit', addExpense);
 
+    // اتصال رویداد change به انتخابگر ماه
+    document.getElementById('month-selector').addEventListener('change', updateMonthlySummary);
+
     // نمایش هزینه‌های ذخیره‌شده
+    const expenses = loadExpenses();
+    populateMonthSelector(expenses);
     renderExpenses();
+    updateMonthlySummary();
 }
 
 // ===== اجرا بعد از بارگیری کامل صفحه =====
