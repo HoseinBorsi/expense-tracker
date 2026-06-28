@@ -400,6 +400,50 @@ function toggleAddForm(forceState) {
 }
 
 // =============================================
+// EXPORT CSV (قابل باز شدن در اکسل)
+// =============================================
+function exportCSV() {
+    const expenses = loadExpenses();
+    if (expenses.length === 0) {
+        showToast('هیچ هزینه‌ای برای خروجی گرفتن وجود نداره.');
+        return;
+    }
+
+    // ستون‌های CSV
+    const headers = ['تاریخ', 'دسته‌بندی', 'توضیح', 'مبلغ (تومان)'];
+
+    const rows = expenses.map(function(e) {
+        const dateStr = JalaliDate.format(e.jy, e.jm, e.jd, '{year}/{d} {month}');
+        return [
+            dateStr,
+            e.category || 'سایر',
+            '"' + e.description.replace(/"/g, '""') + '"',      // escape double quotes
+            e.amount
+        ].join(',');
+    });
+
+    // BOM برای نمایش درست فارسی در اکسل
+    const bom = '\uFEFF';
+    const csvContent = bom + headers.join(',') + '\n' + rows.join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+
+    const today = JalaliDate.today();
+    a.download = 'expenses-' + today.year + '-' +
+                  String(today.month).padStart(2, '0') + '-' +
+                  String(today.day).padStart(2, '0') + '.csv';
+
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('📊 فایل اکسل با موفقیت دانلود شد.');
+}
+
+// =============================================
 // EXPORT JSON
 // =============================================
 function exportJSON() {
@@ -494,7 +538,8 @@ function init() {
     });
 
     // رویداد خروجی
-    document.getElementById('export-btn').addEventListener('click', exportJSON);
+    document.getElementById('export-csv-btn').addEventListener('click', exportCSV);
+    document.getElementById('export-json-btn').addEventListener('click', exportJSON);
 
     // اسکرول
     document.getElementById('fab-top').addEventListener('click', scrollToTop);
